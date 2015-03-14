@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/title/button">
+        <file>close.png</file>
+        <file>min.png</file>
+        <file>max.png</file>
+        <file>skin.png</file>
+    </qresource>
+</RCC>
