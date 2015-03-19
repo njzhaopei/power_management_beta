@@ -17,16 +17,25 @@ SOURCES += main.cpp\
     tittlewidget.cpp \
     mainwidget.cpp \
     footwidget.cpp \
-    personalsavemode.cpp
+    personalsavemode.cpp \
+    main_menu.cpp \
+    battery_detact_thread.cpp \
+    worker.cpp
 
 HEADERS  += mainwindow.h \
     tittlewidget.h \
     common.h \
     footwidget.h \
     mainwidget.h \
-    personalsavemode.h
+    personalsavemode.h \
+    main_menu.h \
+    battery_detact_thread.h \
+    worker.h
 
 FORMS    += mainwindow.ui
 
 RESOURCES += \
-    tittlebutton.qrc
+    tittlebutton.qrc \
+    secondmenu.qrc \
+    logo.qrc \
+    battery.qrc

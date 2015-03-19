@@ -143,3 +143,4 @@ void Tittle_Widget::mouseDoubleClickEvent(QMouseEvent *)
         qDebug() << "show normal";
     }
 }
+

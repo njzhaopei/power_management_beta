@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/battery">
+        <file>low_battery.png</file>
+        <file>middle_battery.png</file>
+        <file>high_battery.png</file>
+        <file>full_battery.png</file>
+    </qresource>
+</RCC>

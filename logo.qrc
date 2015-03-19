@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/app/syslogo">
+        <file>battery.png</file>
+    </qresource>
+</RCC>

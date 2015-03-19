@@ -3,18 +3,21 @@
 personalsavemode::personalsavemode(QWidget *parent) : QWidget(parent)
 {
     top_widget = new QWidget();
-    top_widget->setFixedSize(420,35);
+    top_widget->setFixedSize(420,40);
     top_layout = new QVBoxLayout();
     return_icon = new QPushButton();//second menu to return to first menu
-    QPixmap return_pic(":/title/button/close.png");
+    QPixmap return_pic(":/secondmenu/tittle/return.ico");
     return_icon->setIcon(return_pic);
-    return_icon->setIconSize(return_pic.size());
-    return_icon->setFixedSize(30,30);
+    return_icon->setIconSize(QSize(35, 38));
+    return_icon->setFixedSize(35,38);
     return_icon->setFlat(true);
-    top_layout->addWidget(return_icon,0,Qt::AlignLeft);
+    top_layout->addWidget(return_icon,0,Qt::AlignLeft | Qt::AlignTop);
+    top_layout->addStretch();
+    top_layout->setMargin(0);
+    top_layout->setSpacing(0);
     top_widget->setLayout(top_layout);
     center_widget = new QWidget();//for setting ways
-    center_widget->setFixedSize(420,595);
+    center_widget->setFixedSize(420,555);
 
     foot_widget = new QWidget();
     foot_widget->setFixedSize(420,50);
@@ -32,7 +35,10 @@ personalsavemode::personalsavemode(QWidget *parent) : QWidget(parent)
     total_layout->addWidget(top_widget);
     total_layout->addWidget(center_widget);
     total_layout->addWidget(foot_widget);
+    connect(cancel_action,SIGNAL(clicked()),this,SIGNAL(turn_first_menu()));
+    connect(return_icon,SIGNAL(clicked()),this,SIGNAL(turn_first_menu()));
     setLayout(total_layout);
+
 }
 
 personalsavemode::~personalsavemode()

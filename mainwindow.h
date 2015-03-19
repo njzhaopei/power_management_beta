@@ -9,6 +9,10 @@
 #include <QVBoxLayout>
 #include <QStackedWidget>
 #include <footwidget.h>
+#include <QMouseEvent>
+#include <QAction>
+#include <QSystemTrayIcon>
+#include "main_menu.h"
 namespace Ui {
 class MainWindow;
 }
@@ -19,7 +23,13 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    void mousePressEvent(QMouseEvent *);
+    void mouseMoveEvent(QMouseEvent*);
+    void changeEvent(QEvent *e);
+    void closeEvent(QCloseEvent *e);
+    void create_trayiconMenu();
     ~MainWindow();
+
 
 private:
     Ui::MainWindow *ui;
@@ -28,10 +38,25 @@ private:
     QVBoxLayout *temp_layout;//for center widget && foot widget
     Main_Widget *center;
     Foot_Widget *foot;
+    QWidget *personalwidget;
     QStackedWidget *stack;
-
+    QPoint m_DragPosition;
+    void createActions();
+    void show_widget();
+    QAction *action_show;
+    QAction *action_quit;
+    QAction *action_help;
+    QAction *action_minimize;
+    QSystemTrayIcon *mytrayIcon;
+    Main_Menu *menu;
+    QMenu *trayiconMenu;
+    QWidget *widget;
 private slots:
-    void turnpage();
+    void turn_second_page();
+    void turn_main_page();
+    void iconIsActived(QSystemTrayIcon::ActivationReason reason);
+    void showmin();
+    void closeAll();
 };
 
 #endif // MAINWINDOW_H

@@ -13,7 +13,7 @@ public:
     ~personalsavemode();
 
 signals:
-
+    void turn_first_menu();
 public slots:
 private:
     QWidget *top_widget;

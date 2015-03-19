@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QPushButton>
+#include <QSplitter>
 class Foot_Widget : public QWidget
 {
     Q_OBJECT

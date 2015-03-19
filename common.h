@@ -11,7 +11,7 @@
 #define WINDOW_BUTTON_COUNT     4
 #define WINDOW_PAGE_MOVE        20
 #define WINDOW_ONEBUTTON_WIDTH  170
-#define DEFAULT_SKIN            "background-color: #ff0000"
+#define DEFAULT_SKIN            "background-color: #ec6a95"
 #define SIMPLE_FONT             "WenQuanYi Micro Hei Mone"
 #define URW_C_FONT              "URW Chancery L"
 #define URW_P_FONT              "URW Palladio L"

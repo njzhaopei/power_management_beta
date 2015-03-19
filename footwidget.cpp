@@ -14,29 +14,29 @@ Foot_Widget::Foot_Widget(QWidget *parent) : QWidget(parent)
     quick_save_mode->setPalette(text_palette);
     quick_save_mode->setFixedHeight(96);
     quick_save_mode->setFlat(true);
-    quick_save_mode->setStyleSheet("border: 1px dashed black");
+    quick_save_mode->setStyleSheet("border: 0.5px solid white");
     limited_mode = new QPushButton("极限省电模式");
     limited_mode->setPalette(text_palette);
     limited_mode->setFixedHeight(96);
     limited_mode->setFlat(true);
-    limited_mode->setStyleSheet("border: 1px dashed black");
+    limited_mode->setStyleSheet("border: 0.5px solid white");
     locked_mode = new QPushButton("锁屏模式");
     limited_mode->setPalette(text_palette);
     locked_mode->setFixedHeight(96);
     locked_mode->setFlat(true);
-    locked_mode->setStyleSheet("border: 1px dashed black");
+    locked_mode->setStyleSheet("border: 0.5px solid white");
     personal_mode = new QPushButton("个性化模式");
     limited_mode->setPalette(text_palette);
     personal_mode->setFixedHeight(96);
     personal_mode->setFlat(true);
-    personal_mode->setStyleSheet("border: 1px dashed black");
+    personal_mode->setStyleSheet("border: 0.5px solid white");
     all_layout->addWidget(quick_save_mode);
     all_layout->addWidget(limited_mode);
     all_layout->addWidget(locked_mode);
     all_layout->addWidget(personal_mode);
     all_layout->setSpacing(0);
     all_layout->setMargin(0);
-    connect(personal_mode,SIGNAL(clicked()),this,SIGNAL(turn_second_menu()));
+    connect(personal_mode,SIGNAL(clicked()),this,SIGNAL(turn_second_menu()));//cancel action connect to second page
     setLayout(all_layout);
 }
 

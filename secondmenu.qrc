@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/secondmenu/tittle">
+        <file>backward2.png</file>
+        <file>backward3.png</file>
+        <file>backward.ico</file>
+        <file>return.ico</file>
+    </qresource>
+</RCC>
