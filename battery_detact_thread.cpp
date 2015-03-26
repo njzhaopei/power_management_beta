@@ -2,6 +2,9 @@
 
 battery_detact_thread::battery_detact_thread()
 {
+
+    moveToThread(this); // 错误
+
     get_battery_time = new QProcess;
 }
 
@@ -15,7 +18,7 @@ void battery_detact_thread::run()
     //timer.moveToThread(this);
     QTimer timer;
     worker work;
-    connect(&timer,SIGNAL(timeout()),&work,SLOT(onTimeout()),Qt::AutoConnection);
+    connect(&timer,SIGNAL(timeout()),&work,SLOT(onTimeout()));
     timer.start(1000);
     exec();
 }

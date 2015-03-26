@@ -42,9 +42,10 @@ Main_Widget::Main_Widget(QWidget *parent) :
     main_layout = new QHBoxLayout;
     main_layout->addWidget(left_widget);
     main_layout->addWidget(right_widget);
+    work = new worker();
 //    connect(get_info,SIGNAL(readyRead()),this,SLOT(readOutput()));
     connect(get_info,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(readOutput()));
-    connect(&work,SIGNAL(refresh_right_widget()),this,SLOT(do_refresh()),Qt::DirectConnection);
+    connect(work,SIGNAL(refresh_right_widget()),this,SLOT(do_refresh()),Qt::DirectConnection);
     qDebug() << "main_widget thread" << QThread::currentThreadId();
     setLayout(main_layout);
 }
@@ -72,25 +73,26 @@ void Main_Widget::readOutput()
 void Main_Widget::do_refresh()
 {
     //clear all mask, reset the label
-    qDebug() << "start charging";
-    if(work.state == "charging"){
+    qDebug() << "_______________________start charging_____________________________";
+    qDebug() << "8888888888888888888888888888888888888888";
+    if(work->state == "charging"){
         remain_battery->clearMask();
         remain_battery->setText("剩余电量");
         remain_battery_value->clearMask();
-        remain_battery_value->setText(work.percentage);
+        remain_battery_value->setText(work->percentage);
         remain_time->clearMask();
         remain_time->setText("time to full");
         remain_time_value->clearMask();
-        remain_time_value->setText(work.totaltime);
+        remain_time_value->setText(work->totaltime);
     }
-    if(work.state == "discharging"){
+    if(work->state == "discharging"){
         remain_battery->clearMask();
         remain_battery->setText("剩余电量");
         remain_battery_value->clearMask();
-        remain_battery_value->setText(work.percentage);
+        remain_battery_value->setText(work->percentage);
         remain_time->clearMask();
         remain_time->setText("time to lack");
         remain_time_value->clearMask();
-        remain_time_value->setText(work.totaltime);
+        remain_time_value->setText(work->totaltime);
     }
 }

@@ -38,4 +38,5 @@ RESOURCES += \
     tittlebutton.qrc \
     secondmenu.qrc \
     logo.qrc \
-    battery.qrc
+    battery.qrc \
+    switch.qrc

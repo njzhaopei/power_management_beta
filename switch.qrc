@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/foot/switch">
+        <file>off.png</file>
+        <file>on.png</file>
+        <file>on1.png</file>
+        <file>off1.png</file>
+    </qresource>
+</RCC>

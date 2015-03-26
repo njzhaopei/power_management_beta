@@ -31,7 +31,7 @@ private:
     void get_battery_info();
     void do_shell(QString e);
     QProcess *get_info;
-    worker work;
+    worker *work;
 private slots:
     void readOutput();
     void do_refresh();

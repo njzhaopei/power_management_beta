@@ -22,7 +22,9 @@ personalsavemode::personalsavemode(QWidget *parent) : QWidget(parent)
     foot_widget = new QWidget();
     foot_widget->setFixedSize(420,50);
     cancel_action = new QPushButton("取消");
+    cancel_action->setFlat(true);
     apply_action = new QPushButton("确认");
+    apply_action->setFlat(true);
     foot_layout = new QHBoxLayout();
     foot_layout->addStretch(1);
     foot_layout->addWidget(cancel_action);
@@ -37,6 +39,7 @@ personalsavemode::personalsavemode(QWidget *parent) : QWidget(parent)
     total_layout->addWidget(foot_widget);
     connect(cancel_action,SIGNAL(clicked()),this,SIGNAL(turn_first_menu()));
     connect(return_icon,SIGNAL(clicked()),this,SIGNAL(turn_first_menu()));
+    connect(apply_action,SIGNAL(clicked()),this,SLOT(show_tip()));
     setLayout(total_layout);
 
 }
@@ -46,3 +49,6 @@ personalsavemode::~personalsavemode()
 
 }
 
+void personalsavemode::show_tip(){
+    QMessageBox::information(0,"确定应用","你确定要取消应用节电选项吗？取消OK，否则返回");
+}
