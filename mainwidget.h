@@ -8,7 +8,8 @@
 #include "QPushButton"
 #include "QEvent"
 #include "QProcess"
-#include "worker.h"
+//#include "worker.h"
+#include  "battery_detact_thread.h"
 #include "QDebug"
 class Main_Widget : public QWidget
 {
@@ -31,10 +32,10 @@ private:
     void get_battery_info();
     void do_shell(QString e);
     QProcess *get_info;
-    worker *work;
+    battery_detact_thread *child_t;
 private slots:
     void readOutput();
-    void do_refresh();
+    void do_refresh(QString,QString,QString);
 };
 
 #endif // MAINWIDGET

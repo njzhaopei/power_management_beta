@@ -6,6 +6,8 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QSplitter>
+#include <QPixmap>
+#include <QDebug>
 class Foot_Widget : public QWidget
 {
     Q_OBJECT
@@ -16,6 +18,10 @@ public:
 signals:
     void turn_second_menu();
 public slots:
+    void quick_change_state();
+    void limited_change_state();
+    void locked_change_state();
+
 
 private:
     QLabel *bottom_label;
@@ -28,6 +34,9 @@ private:
     QLabel *locked_label;
     QPushButton *personal_mode;
     QLabel *personal_label;
+    void set_animation();
+    bool mutex;
+    int quick_time,limit_time,lock_time;
 
 };
 

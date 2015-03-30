@@ -42,11 +42,13 @@ Main_Widget::Main_Widget(QWidget *parent) :
     main_layout = new QHBoxLayout;
     main_layout->addWidget(left_widget);
     main_layout->addWidget(right_widget);
-    work = new worker();
+    //进行connect前必须实例化
+    child_t = new battery_detact_thread();
 //    connect(get_info,SIGNAL(readyRead()),this,SLOT(readOutput()));
     connect(get_info,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(readOutput()));
-    connect(work,SIGNAL(refresh_right_widget()),this,SLOT(do_refresh()),Qt::DirectConnection);
+    connect(child_t,SIGNAL(refresh_widget_signal(QString,QString,QString)),this,SLOT(do_refresh(QString,QString,QString)));
     qDebug() << "main_widget thread" << QThread::currentThreadId();
+    child_t->start();
     setLayout(main_layout);
 }
 Main_Widget::~Main_Widget()
@@ -70,29 +72,29 @@ void Main_Widget::readOutput()
     battery_label->setStyleSheet("QToolTip{border:1px solid #ec6a95;background:#F0F8FF;color:grey; }");
 }
 
-void Main_Widget::do_refresh()
+void Main_Widget::do_refresh(QString state,QString totaltime,QString percentage)
 {
     //clear all mask, reset the label
     qDebug() << "_______________________start charging_____________________________";
     qDebug() << "8888888888888888888888888888888888888888";
-    if(work->state == "charging"){
+    if(state == "charging"){
         remain_battery->clearMask();
         remain_battery->setText("剩余电量");
         remain_battery_value->clearMask();
-        remain_battery_value->setText(work->percentage);
+        remain_battery_value->setText(percentage);
         remain_time->clearMask();
-        remain_time->setText("time to full");
+        remain_time->setText("充满时间还剩");
         remain_time_value->clearMask();
-        remain_time_value->setText(work->totaltime);
+        remain_time_value->setText(totaltime);
     }
-    if(work->state == "discharging"){
+    if(state == "discharging"){
         remain_battery->clearMask();
         remain_battery->setText("剩余电量");
         remain_battery_value->clearMask();
-        remain_battery_value->setText(work->percentage);
+        remain_battery_value->setText(percentage);
         remain_time->clearMask();
-        remain_time->setText("time to lack");
+        remain_time->setText("用完时间还剩");
         remain_time_value->clearMask();
-        remain_time_value->setText(work->totaltime);
+        remain_time_value->setText(totaltime);
     }
 }

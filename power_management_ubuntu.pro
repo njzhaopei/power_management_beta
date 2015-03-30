@@ -20,7 +20,7 @@ SOURCES += main.cpp\
     personalsavemode.cpp \
     main_menu.cpp \
     battery_detact_thread.cpp \
-    worker.cpp
+#    worker.cpp
 
 HEADERS  += mainwindow.h \
     tittlewidget.h \
@@ -30,7 +30,7 @@ HEADERS  += mainwindow.h \
     personalsavemode.h \
     main_menu.h \
     battery_detact_thread.h \
-    worker.h
+#    worker.h
 
 FORMS    += mainwindow.ui
 

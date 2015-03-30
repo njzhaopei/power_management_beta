@@ -3,8 +3,11 @@
 Foot_Widget::Foot_Widget(QWidget *parent) : QWidget(parent)
 {
     setFixedSize(420,385);
+    mutex = true;
+    quick_time = 0;
+    limit_time = 0;
+    lock_time = 0;
     QPalette text_palette = palette();
-    QPixmap switch_on("://foot/switch/on1");
     QPixmap switch_off("://foot/switch/off1");
     text_palette.setColor(QPalette::WindowText, QColor(0, 0, 0));
     bottom_label = new QLabel();
@@ -74,6 +77,9 @@ Foot_Widget::Foot_Widget(QWidget *parent) : QWidget(parent)
     all_layout->addWidget(personal_mode);
     all_layout->setSpacing(0);
     all_layout->setMargin(0);
+    connect(quick_save_mode,SIGNAL(clicked()),this,SLOT(quick_change_state()));
+    connect(limited_mode,SIGNAL(clicked()),this,SLOT(limited_change_state()));
+    connect(locked_mode,SIGNAL(clicked()),this,SLOT(locked_change_state()));
     connect(personal_mode,SIGNAL(clicked()),this,SIGNAL(turn_second_menu()));//cancel action connect to second page
     setLayout(all_layout);
 }
@@ -82,4 +88,62 @@ Foot_Widget::~Foot_Widget()
 {
 
 }
-
+void Foot_Widget::quick_change_state()
+{
+    quick_time++;
+    if(mutex == true && (quick_time%2 == 1)){
+        QPixmap switch_on("://foot/switch/on1");
+        set_animation();
+        quick_save_label->clearMask();
+        quick_save_label->setPixmap(switch_on);
+        mutex = false;
+    }
+    if(mutex == false && (quick_time%2 == 0)){
+         QPixmap switch_off("://foot/switch/off1");
+        set_animation();
+        quick_save_label->clearMask();
+        quick_save_label->setPixmap(switch_off);
+        mutex =  true;
+    }
+}
+void Foot_Widget::limited_change_state()
+{
+    limit_time++;
+    if(mutex == true && (limit_time%2 == 1)){
+        QPixmap switch_on("://foot/switch/on1");
+        set_animation();
+        limited_label->clearMask();
+        limited_label->setPixmap(switch_on);
+        mutex = false;
+    }
+    if(mutex == false && (limit_time%2 == 0)){
+         QPixmap switch_off("://foot/switch/off1");
+        set_animation();
+        limited_label->clearMask();
+        limited_label->setPixmap(switch_off);
+        mutex =  true;
+    }
+}
+void Foot_Widget::locked_change_state()
+{
+    lock_time++;
+    if(mutex == true && (lock_time%2 == 1)){
+        QPixmap switch_on("://foot/switch/on1");
+        set_animation();
+        locked_label->clearMask();
+        locked_label->setPixmap(switch_on);
+        mutex = false;
+    }
+    if(mutex == false && (lock_time%2 == 0)){
+         QPixmap switch_off("://foot/switch/off1");
+        set_animation();
+        locked_label->clearMask();
+        locked_label->setPixmap(switch_off);
+        mutex =  true;
+    }
+}
+//set animation
+void Foot_Widget::set_animation()
+{
+    qDebug() << "set animation";
+}
