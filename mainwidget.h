@@ -33,6 +33,8 @@ private:
     void do_shell(QString e);
     QProcess *get_info;
     battery_detact_thread *child_t;
+    void change_battery_pic();
+    int per_to_int;
 private slots:
     void readOutput();
     void do_refresh(QString,QString,QString);

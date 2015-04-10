@@ -90,60 +90,65 @@ Foot_Widget::~Foot_Widget()
 }
 void Foot_Widget::quick_change_state()
 {
-    quick_time++;
-    if(mutex == true && (quick_time%2 == 1)){
-        QPixmap switch_on("://foot/switch/on1");
-        set_animation();
-        quick_save_label->clearMask();
-        quick_save_label->setPixmap(switch_on);
-        mutex = false;
-    }
-    if(mutex == false && (quick_time%2 == 0)){
-         QPixmap switch_off("://foot/switch/off1");
-        set_animation();
+    if(mutex == false && (quick_time%2 == 1)){
+        QPixmap switch_off("://foot/switch/off1");
         quick_save_label->clearMask();
         quick_save_label->setPixmap(switch_off);
         mutex =  true;
+        quick_time++;
+        return ;
+    }
+    if(mutex == true && (quick_time%2 == 0)){
+        qDebug() << "----------quick sig-------------";
+        emit quick_send_sig();
+        qDebug() << "----------quick sig1-------------";
+        QPixmap switch_on("://foot/switch/on1");
+        quick_save_label->clearMask();
+        qDebug() << "----------switch on-------------";
+        quick_save_label->setPixmap(switch_on);
+        mutex = false;
+        quick_time++;
+        return ;
     }
 }
 void Foot_Widget::limited_change_state()
 {
-    limit_time++;
-    if(mutex == true && (limit_time%2 == 1)){
+    if(mutex == true && (limit_time%2 == 0)){
+        emit limited_send_sig();
         QPixmap switch_on("://foot/switch/on1");
-        set_animation();
         limited_label->clearMask();
         limited_label->setPixmap(switch_on);
         mutex = false;
+        limit_time++;
+        return ;
     }
-    if(mutex == false && (limit_time%2 == 0)){
-         QPixmap switch_off("://foot/switch/off1");
-        set_animation();
+    if(mutex == false && (limit_time%2 == 1)){
+        emit recovery_sig();
+        QPixmap switch_off("://foot/switch/off1");
         limited_label->clearMask();
         limited_label->setPixmap(switch_off);
         mutex =  true;
+        limit_time++;
+        return ;
     }
 }
 void Foot_Widget::locked_change_state()
 {
-    lock_time++;
-    if(mutex == true && (lock_time%2 == 1)){
+    if(mutex == true && (lock_time%2 == 0)){
+        emit locked__send_sig();
         QPixmap switch_on("://foot/switch/on1");
-        set_animation();
         locked_label->clearMask();
         locked_label->setPixmap(switch_on);
         mutex = false;
+        lock_time++;
+        return ;
     }
-    if(mutex == false && (lock_time%2 == 0)){
+    if(mutex == false && (lock_time%2 == 1)){
          QPixmap switch_off("://foot/switch/off1");
-        set_animation();
         locked_label->clearMask();
         locked_label->setPixmap(switch_off);
         mutex =  true;
+        lock_time++;
+        return ;
     }
-}
-//set animation
-void Foot_Widget::set_animation()
-{
-    qDebug() << "set animation";
 }

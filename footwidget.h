@@ -17,6 +17,10 @@ public:
 
 signals:
     void turn_second_menu();
+    void quick_send_sig();
+    void limited_send_sig();
+    void locked__send_sig();
+    void recovery_sig();
 public slots:
     void quick_change_state();
     void limited_change_state();

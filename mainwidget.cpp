@@ -75,6 +75,8 @@ void Main_Widget::readOutput()
 void Main_Widget::do_refresh(QString state,QString totaltime,QString percentage)
 {
     //clear all mask, reset the label
+    int index;
+    bool ok;
     qDebug() << "_______________________start charging_____________________________";
     qDebug() << "8888888888888888888888888888888888888888";
     if(state == "charging"){
@@ -82,6 +84,10 @@ void Main_Widget::do_refresh(QString state,QString totaltime,QString percentage)
         remain_battery->setText("剩余电量");
         remain_battery_value->clearMask();
         remain_battery_value->setText(percentage);
+        index = percentage.lastIndexOf("%");
+        per_to_int = (percentage.mid(0,index)).toInt(&ok,10);
+        if(per_to_int >= 25)
+            change_battery_pic();
         remain_time->clearMask();
         remain_time->setText("充满时间还剩");
         remain_time_value->clearMask();
@@ -92,9 +98,34 @@ void Main_Widget::do_refresh(QString state,QString totaltime,QString percentage)
         remain_battery->setText("剩余电量");
         remain_battery_value->clearMask();
         remain_battery_value->setText(percentage);
+        index = percentage.lastIndexOf("%");
+        per_to_int = (percentage.mid(0,index)).toInt(&ok,10);
+        if(per_to_int >= 25)
+            change_battery_pic();
         remain_time->clearMask();
         remain_time->setText("用完时间还剩");
         remain_time_value->clearMask();
         remain_time_value->setText(totaltime);
     }
+}
+void Main_Widget::change_battery_pic()
+{
+    if(per_to_int >= 25 && per_to_int <= 50)
+        {
+            QPixmap mid_battery("://battery/middle_battery");
+            battery_label->clearMask();
+            battery_label->setIcon(mid_battery);
+         }
+    if(per_to_int > 50 && per_to_int <= 95)
+        {
+            QPixmap high_battery("://battery/high_battery");
+            battery_label->clearMask();
+            battery_label->setIcon(high_battery);
+            }
+    if(per_to_int > 95 && per_to_int <= 100)
+        {
+            QPixmap full_battery("://battery/full_battery");
+            battery_label->clearMask();
+            battery_label->setIcon(full_battery);
+            }
 }

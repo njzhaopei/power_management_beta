@@ -4,6 +4,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
+    state = 0;
     this->setFixedSize(420,680);
     //this->setFixedSize(900,500);
     this->setWindowIcon(QIcon(":/app/syslogo/battery"));
@@ -24,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     temp_layout = new QVBoxLayout();
     center = new Main_Widget();
     foot = new Foot_Widget();
+    authen = new authenticate();
     main_layout = new QVBoxLayout();
 //    main_layout->addWidget(tittle,0,Qt::AlignTop);
     temp_layout->addWidget(center);
@@ -43,12 +45,17 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(tittle,SIGNAL(show_close()),this,SLOT(hide()));//close all widgets
     connect(foot,SIGNAL(turn_second_menu()),this,SLOT(turn_second_page()));
     connect(personalwidget,SIGNAL(turn_first_menu()),this,SLOT(turn_main_page()));
+    connect(foot,SIGNAL(quick_send_sig()),this,SLOT(quick_sig_handler()));
+    connect(foot,SIGNAL(limited_send_sig()),this,SLOT(limited_sig_handler()));
+    connect(foot,SIGNAL(locked__send_sig()),this,SLOT(locked_sig_handler()));
+    connect(foot,SIGNAL(recovery_sig()),this,SLOT(recovery_state()));
     connect(tittle,SIGNAL(show_min()),this,SLOT(showmin()));
     connect(tittle,SIGNAL(showMax()),this,SLOT(showMaximized()));
     connect(tittle,SIGNAL(showNor()),this,SLOT(showNormal()));
     connect(action_show,SIGNAL(triggered()),this,SLOT(showNormal()));
     connect(action_quit,SIGNAL(triggered()),this,SLOT(closeAll()));
     connect(action_minimize,SIGNAL(triggered()),this,SLOT(showMinimized()));
+    connect(authen,SIGNAL(passwd_ready()),this,SLOT(do_handle()));
     //activate app
     connect(mytrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(iconIsActived(QSystemTrayIcon::ActivationReason)));
     widget->setLayout(main_layout);
@@ -174,4 +181,63 @@ void MainWindow::closeEvent(QCloseEvent *e)
     {
         this->hide();
     }
+}
+void MainWindow::quick_sig_handler()
+{
+    qDebug() << "-----------quick-------------";
+    state = 1;
+    authen->show();
+}
+void MainWindow::limited_sig_handler()
+{
+    qDebug() << "limited";
+    state = 2;
+    authen->show();
+}
+void MainWindow::locked_sig_handler()
+{
+    qDebug() << "locked";
+    state = 3;
+    authen->show();
+}
+void MainWindow::do_handle()
+{
+    if(authen->passwd_edit->text() == "mint"){
+    process = new QProcess;
+    QString info = "bash -c \"echo \""+authen->passwd_edit->text()+"\"| sudo -S bash ./settings/quick_mode.sh";
+    QString info1 = "bash -c \"echo \""+authen->passwd_edit->text()+"\"| sudo -S bash ./settings/limited_mode.sh";
+    QString info2 = "bash -c \"echo \""+authen->passwd_edit->text()+"\"| sudo -S bash ./settings/locked_mode.sh";
+    switch (state) {
+    QMessageBox::warning(this,tr("warning"),tr("应用成功"),QMessageBox::Yes);
+    case 1:
+        qDebug() << "handle limited_mode";
+        qDebug() << info;
+        process->start(info);
+        authen->hide();
+        break;
+    case 2:
+        qDebug() << "handle limited_mode";
+        process->start(info1);
+        authen->hide();
+        break;
+    case 3:
+        qDebug() << "handle locked_mode";
+        process->start(info2);
+        authen->hide();
+        break;
+    default:
+        break;
+    }
+    }
+    else {
+        QMessageBox::warning(this,tr("warning"),tr("密码错误"),QMessageBox::Yes);
+        authen->passwd_edit->clear();
+    }
+}
+void MainWindow::recovery_state()
+{
+    qDebug() << "恢复状态";
+    QString info = "bash -c \"echo \""+authen->passwd_edit->text()+"\"| sudo -S bash ./settings/recovery_mode.sh";
+    recovery_process = new QProcess;
+    recovery_process->start(info);
 }

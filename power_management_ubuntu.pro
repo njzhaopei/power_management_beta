@@ -20,6 +20,7 @@ SOURCES += main.cpp\
     personalsavemode.cpp \
     main_menu.cpp \
     battery_detact_thread.cpp \
+    authenticate.cpp
 #    worker.cpp
 
 HEADERS  += mainwindow.h \
@@ -30,6 +31,7 @@ HEADERS  += mainwindow.h \
     personalsavemode.h \
     main_menu.h \
     battery_detact_thread.h \
+    authenticate.h
 #    worker.h
 
 FORMS    += mainwindow.ui

@@ -13,6 +13,8 @@
 #include <QAction>
 #include <QSystemTrayIcon>
 #include "main_menu.h"
+#include "authenticate.h"
+#include <QProcess>
 namespace Ui {
 class MainWindow;
 }
@@ -33,6 +35,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QProcess *process;
+    QProcess *recovery_process;
     Tittle_Widget *tittle;
     QVBoxLayout *main_layout;
     QVBoxLayout *temp_layout;//for center widget && foot widget
@@ -51,12 +55,19 @@ private:
     Main_Menu *menu;
     QMenu *trayiconMenu;
     QWidget *widget;
+    authenticate *authen;
+    int state;
 private slots:
     void turn_second_page();
     void turn_main_page();
     void iconIsActived(QSystemTrayIcon::ActivationReason reason);
     void showmin();
     void closeAll();
+    void quick_sig_handler();
+    void limited_sig_handler();
+    void locked_sig_handler();
+    void do_handle();
+    void recovery_state();
 };
 
 #endif // MAINWINDOW_H

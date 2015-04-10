@@ -20,6 +20,7 @@ personalsavemode::personalsavemode(QWidget *parent) : QWidget(parent)
     top_layout->addWidget(common,0,Qt::AlignCenter);
 
     center_label = new QLabel();
+    center_label->setStyleSheet("background-color: #fdf5e6");
     //top_layout->addStretch();
     top_layout->setMargin(0);
     top_layout->setSpacing(0);
