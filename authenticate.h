@@ -22,6 +22,10 @@ public:
     QHBoxLayout *passwd_layout;
     QHBoxLayout *action_layout;
     QVBoxLayout *main_layout;
+    QWidget *m_widget;
+    QWidget *f_widget;
+    QWidget *t_widget;
+    //QPushButton *close_authen;
 
 signals:
     void passwd_ready();

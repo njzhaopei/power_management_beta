@@ -1,11 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "QDesktopWidget"
+#include "QApplication"
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent)
+    QWidget(parent)
 {
     state = 0;
     this->setFixedSize(420,680);
+    total = new QVBoxLayout;
     //this->setFixedSize(900,500);
     this->setWindowIcon(QIcon(":/app/syslogo/battery"));
 //    menu = new QMenu(this);
@@ -18,8 +20,10 @@ MainWindow::MainWindow(QWidget *parent) :
     mytrayIcon->showMessage("Tray","Tray Manager",QSystemTrayIcon::Information,10000);
     mytrayIcon->setContextMenu(trayiconMenu);
     widget = new QWidget () ;
+    widget->setAttribute(Qt::WA_DeleteOnClose);
     tittle = new Tittle_Widget();
     QWidget *tempwidget = new QWidget();
+    tempwidget->setAttribute(Qt::WA_DeleteOnClose);
     personalwidget = new personalsavemode();
     stack = new QStackedWidget();
     temp_layout = new QVBoxLayout();
@@ -60,12 +64,17 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(mytrayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(iconIsActived(QSystemTrayIcon::ActivationReason)));
     widget->setLayout(main_layout);
     this->setWindowFlags(Qt::FramelessWindowHint);
-    this->setCentralWidget(widget);
+    //this->setCentralWidget(widget);
+    total->addWidget(widget);
+    setLayout(total);
+    total->setSpacing(0);
+    total->setMargin(0);
+    this->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+    //delete ui;
 }
 void MainWindow::turn_second_page()
 {
@@ -168,11 +177,9 @@ void MainWindow::create_trayiconMenu()
 
 void MainWindow::closeAll()
 {
-    delete tittle;
-    delete center;
-    delete foot;
-    this->close();
-    mytrayIcon->hide();
+    //this->close();
+    QApplication *d;
+    d->quit();
 }
 //close to systemtrayicon
 void MainWindow::closeEvent(QCloseEvent *e)

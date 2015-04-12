@@ -19,7 +19,7 @@ namespace Ui {
 class MainWindow;
 }
 
-class MainWindow : public QMainWindow
+class MainWindow : public QWidget
 {
     Q_OBJECT
 
@@ -56,6 +56,7 @@ private:
     QMenu *trayiconMenu;
     QWidget *widget;
     authenticate *authen;
+    QVBoxLayout *total;
     int state;
 private slots:
     void turn_second_page();

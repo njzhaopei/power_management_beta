@@ -11,7 +11,9 @@ Main_Widget::Main_Widget(QWidget *parent) :
     main_label->setStyleSheet(DEFAULT_SKIN);
     main_label->setParent(this);
     left_widget = new QWidget();
+    left_widget->setAttribute(Qt::WA_DeleteOnClose);
     right_widget = new QWidget();
+    right_widget->setAttribute(Qt::WA_DeleteOnClose);
     //set text
     QPalette text_palette = palette();
     text_palette.setColor(QPalette::WindowText, QColor(255, 255, 255));

@@ -7,6 +7,7 @@ personalsavemode::personalsavemode(QWidget *parent) : QWidget(parent)
     cpu_temp = 0;
     text_palette.setColor(QPalette::WindowText, QColor(0, 0, 0));
     top_widget = new QWidget();
+    top_widget->setAttribute(Qt::WA_DeleteOnClose);
     top_widget->setFixedSize(420,40);
     top_layout = new QVBoxLayout;
     return_icon = new QPushButton();//second menu to return to first menu
@@ -26,6 +27,7 @@ personalsavemode::personalsavemode(QWidget *parent) : QWidget(parent)
     top_layout->setSpacing(0);
     top_widget->setLayout(top_layout);
     center_widget = new QWidget();//for setting ways
+    center_widget->setAttribute(Qt::WA_DeleteOnClose);
     center_widget->setFixedSize(420,555);
     center_label->setParent(center_widget);
     QHBoxLayout *lcd_temp = new QHBoxLayout;
@@ -136,6 +138,7 @@ personalsavemode::personalsavemode(QWidget *parent) : QWidget(parent)
     center_widget->setLayout(center_layout);
     scrollArea->setWidget(center_label);
     foot_widget = new QWidget();
+    foot_widget->setAttribute(Qt::WA_DeleteOnClose);
     foot_widget->setFixedSize(420,50);
     cancel_action = new QPushButton("取消");
     cancel_action->setFlat(true);
