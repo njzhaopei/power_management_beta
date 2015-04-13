@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/battery_state">
+        <file>low.png</file>
+        <file>middle.png</file>
+        <file>high.png</file>
+        <file>full.png</file>
+    </qresource>
+</RCC>

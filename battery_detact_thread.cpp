@@ -9,7 +9,7 @@ void battery_detact_thread::run()
     //timer.moveToThread(this);
     t = new QTimer();
     connect(t,SIGNAL(timeout()),this,SLOT(onTimeout()));
-    t->start(1000);
+    t->start(100000);
     exec();
 }
 void  battery_detact_thread::onTimeout(){

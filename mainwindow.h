@@ -58,6 +58,8 @@ private:
     authenticate *authen;
     QVBoxLayout *total;
     int state;
+    QString str1;
+    QString str2;
 private slots:
     void turn_second_page();
     void turn_main_page();
@@ -67,6 +69,7 @@ private slots:
     void quick_sig_handler();
     void limited_sig_handler();
     void locked_sig_handler();
+    void personal_sig_handler(QString,QString);
     void do_handle();
     void recovery_state();
 };

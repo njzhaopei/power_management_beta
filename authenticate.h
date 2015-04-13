@@ -1,6 +1,6 @@
 #ifndef AUTHENTICATE_H
 #define AUTHENTICATE_H
-
+#include "common.h"
 #include <QWidget>
 #include <QLabel>
 #include <QLineEdit>
@@ -25,12 +25,13 @@ public:
     QWidget *m_widget;
     QWidget *f_widget;
     QWidget *t_widget;
+    QLabel *t_label;
     //QPushButton *close_authen;
 
 signals:
     void passwd_ready();
 public slots:
-
+    void cancel();
 
 };
 

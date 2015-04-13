@@ -6,19 +6,23 @@ Main_Widget::Main_Widget(QWidget *parent) :
     QWidget(parent)
 {
     setFixedSize(420,260);
+    QPixmap batterypic("://battery_state/low");
+    QPainter painter(this);
+    painter.drawPixmap(0,0,128,128,batterypic);
+    batterypic = batterypic.scaled(batterypic.width()*1.5,batterypic.height()*1.5,Qt::KeepAspectRatio);
+    painter.drawPixmap(210,250,batterypic);
     main_label = new QLabel();
     main_label->setGeometry(0,0,420,260);
     main_label->setStyleSheet(DEFAULT_SKIN);
     main_label->setParent(this);
     left_widget = new QWidget();
-    left_widget->setAttribute(Qt::WA_DeleteOnClose);
     right_widget = new QWidget();
     right_widget->setAttribute(Qt::WA_DeleteOnClose);
     //set text
     QPalette text_palette = palette();
     text_palette.setColor(QPalette::WindowText, QColor(255, 255, 255));
     //set pix
-    QPixmap batterypic("://battery/low_battery");
+
     remain_battery = new QLabel("剩余电量");
     remain_battery->setPalette(text_palette);
     remain_battery->setFont(QFont("黑体",0,80,true));
@@ -114,20 +118,33 @@ void Main_Widget::change_battery_pic()
 {
     if(per_to_int >= 25 && per_to_int <= 50)
         {
-            QPixmap mid_battery("://battery/middle_battery");
+            QPixmap mid_battery("://battery_state/middle");
+            QPainter painter(this);
+            painter.drawPixmap(0,0,128,128,mid_battery);
+            mid_battery = mid_battery.scaled(mid_battery.width()*1.5,mid_battery.height()*1.5,Qt::KeepAspectRatio);
+            painter.drawPixmap(210,250,mid_battery);
             battery_label->clearMask();
             battery_label->setIcon(mid_battery);
          }
     if(per_to_int > 50 && per_to_int <= 95)
         {
-            QPixmap high_battery("://battery/high_battery");
+            QPixmap high_battery("://battery_state/high");
+            QPainter painter(this);
+            painter.drawPixmap(0,0,128,128,high_battery);
+            high_battery = high_battery.scaled(high_battery.width()*1.5,high_battery.height()*1.5,Qt::KeepAspectRatio);
+            painter.drawPixmap(210,250,high_battery);
             battery_label->clearMask();
             battery_label->setIcon(high_battery);
             }
     if(per_to_int > 95 && per_to_int <= 100)
         {
-            QPixmap full_battery("://battery/full_battery");
+            QPixmap full_battery("://battery_state/full");
+            QPainter painter(this);
+            painter.drawPixmap(0,0,128,128,full_battery);
+            full_battery = full_battery.scaled(full_battery.width()*1.5,full_battery.height()*1.5,Qt::KeepAspectRatio);
+            painter.drawPixmap(210,250,full_battery);
             battery_label->clearMask();
             battery_label->setIcon(full_battery);
+
             }
 }

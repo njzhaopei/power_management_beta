@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(tittle,SIGNAL(show_close()),this,SLOT(hide()));//close all widgets
     connect(foot,SIGNAL(turn_second_menu()),this,SLOT(turn_second_page()));
     connect(personalwidget,SIGNAL(turn_first_menu()),this,SLOT(turn_main_page()));
+    connect(personalwidget,SIGNAL(personal_sig_send(QString,QString)),this,SLOT(personal_sig_handler(QString,QString)));
     connect(foot,SIGNAL(quick_send_sig()),this,SLOT(quick_sig_handler()));
     connect(foot,SIGNAL(limited_send_sig()),this,SLOT(limited_sig_handler()));
     connect(foot,SIGNAL(locked__send_sig()),this,SLOT(locked_sig_handler()));
@@ -207,6 +208,18 @@ void MainWindow::locked_sig_handler()
     state = 3;
     authen->show();
 }
+void MainWindow::personal_sig_handler(QString string,QString string1)
+{
+    qDebug() << "personal";
+    state = 4;
+    str1 = string;
+    str2 = string1;
+    qDebug() << "**********************";
+    qDebug() << str1 << str2;
+    qDebug() << "**********************";
+    authen->show();
+}
+
 void MainWindow::do_handle()
 {
     if(authen->passwd_edit->text() == "mint"){
@@ -214,6 +227,8 @@ void MainWindow::do_handle()
     QString info = "bash -c \"echo \""+authen->passwd_edit->text()+"\"| sudo -S bash ./settings/quick_mode.sh";
     QString info1 = "bash -c \"echo \""+authen->passwd_edit->text()+"\"| sudo -S bash ./settings/limited_mode.sh";
     QString info2 = "bash -c \"echo \""+authen->passwd_edit->text()+"\"| sudo -S bash ./settings/locked_mode.sh";
+    QString info3 = "bash -c \"echo \""+authen->passwd_edit->text()+"\"| sudo -S bash ./settings/personal_mode.sh "+str1+" "+str2+"";
+    qDebug() << info3;
     switch (state) {
     QMessageBox::warning(this,tr("warning"),tr("应用成功"),QMessageBox::Yes);
     case 1:
@@ -230,6 +245,11 @@ void MainWindow::do_handle()
     case 3:
         qDebug() << "handle locked_mode";
         process->start(info2);
+        authen->hide();
+        break;
+    case 4:
+        qDebug() << "handle personal_mode";
+        process->start(info3);
         authen->hide();
         break;
     default:

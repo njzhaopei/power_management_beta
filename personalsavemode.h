@@ -22,6 +22,7 @@ public:
 
 signals:
     void turn_first_menu();
+    void personal_sig_send(QString,QString);
 public slots:
      void cpu_control_handler();
      void lcd_control_handler();

@@ -11,6 +11,7 @@
 //#include "worker.h"
 #include  "battery_detact_thread.h"
 #include "QDebug"
+#include <QPainter>
 class Main_Widget : public QWidget
 {
     Q_OBJECT

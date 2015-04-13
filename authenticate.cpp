@@ -4,6 +4,8 @@ authenticate::authenticate(QWidget *parent) : QWidget(parent)
 {
         QPixmap close_pic(":/title/button/close.png");
         t_widget = new QWidget();
+        t_label = new QLabel();
+        t_label->setParent(t_widget);
         QHBoxLayout *t_layout = new QHBoxLayout;
         QPushButton *close_authen = new QPushButton("");
         close_authen->setIcon(close_pic);
@@ -16,6 +18,7 @@ authenticate::authenticate(QWidget *parent) : QWidget(parent)
         t_layout->setMargin(0);
         t_widget->setLayout(t_layout);
         t_widget->setFixedSize(400,40);
+        t_label->setStyleSheet(DEFAULT_SKIN);
 
         m_widget = new QWidget();
         m_widget->setAttribute(Qt::WA_DeleteOnClose);
@@ -26,6 +29,8 @@ authenticate::authenticate(QWidget *parent) : QWidget(parent)
         authen_passwd = new QLabel("登录密码");
         apply_button = new QPushButton("确定");
         cancel_button = new QPushButton("取消");
+        apply_button->setFlat(true);
+        cancel_button->setFlat(true);
         passwd_edit = new QLineEdit();
         passwd_edit->setEchoMode(QLineEdit::Password);
         passwd_layout = new QHBoxLayout;
@@ -49,6 +54,8 @@ authenticate::authenticate(QWidget *parent) : QWidget(parent)
         main_layout->setMargin(0);
         setLayout(main_layout);
         connect(apply_button,SIGNAL(clicked()),this,SIGNAL(passwd_ready()));
+        connect(cancel_button,SIGNAL(clicked()),this,SLOT(cancel()));
+        connect(close_authen,SIGNAL(clicked()),this,SLOT(cancel()));
         setFixedSize(400,200);
         setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
 }
@@ -57,4 +64,7 @@ authenticate::~authenticate()
 {
 
 }
-
+void authenticate::cancel()
+{
+    close();
+}

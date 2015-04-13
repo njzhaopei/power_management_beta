@@ -160,18 +160,22 @@ personalsavemode::personalsavemode(QWidget *parent) : QWidget(parent)
     total_layout->setSpacing(0);
     performance_check->hide();
     saving_check->hide();
+    self_defined_check->hide();
     high_light->hide();
     middle_light->hide();
     low_light->hide();
     total_label = new QLabel();
-    get_setting_status = new QProcess;
+    connect(self_defined_check,SIGNAL(clicked()),this,SLOT(checkchange()));
     connect(performance_check,SIGNAL(clicked()),this,SLOT(checkchange()));
+    connect(saving_check,SIGNAL(clicked()),this,SLOT(checkchange()));
+    connect(high_light,SIGNAL(clicked()),this,SLOT(checkchange()));
+    connect(middle_light,SIGNAL(clicked()),this,SLOT(checkchange()));
+    connect(low_light,SIGNAL(clicked()),this,SLOT(checkchange()));
     connect(cancel_action,SIGNAL(clicked()),this,SIGNAL(turn_first_menu()));
     connect(return_icon,SIGNAL(clicked()),this,SIGNAL(turn_first_menu()));
     connect(apply_action,SIGNAL(clicked()),this,SLOT(apply_app()));
     connect(lcd_brightness,SIGNAL(clicked()),this,SLOT(lcd_control_handler()));
     connect(cpu_frequency_control,SIGNAL(clicked()),this,SLOT(cpu_control_handler()));
-    connect(get_setting_status,SIGNAL(readyRead()),this,SLOT(checkchange()));
     total_label->setStyleSheet("background-color: #fdf5e6");
     total_label->setParent(this);
     setLayout(total_layout);
@@ -204,11 +208,14 @@ void personalsavemode::show_checkbox()
 {
     performance_check->show();
     saving_check->show();
+    self_defined_check->show();
+
 }
 void personalsavemode::hide_checkbox()
 {
     performance_check->hide();
     saving_check->hide();
+    self_defined_check->hide();
 }
 void personalsavemode::lcd_control_handler()
 {
@@ -239,33 +246,54 @@ void personalsavemode::hide_spinbox()
 void personalsavemode::apply_app()
 {
     show_tip();
-    get_setting_status->start("bash ./settings/battery_state.sh "+lcd_brightness_status+" "+cpu_frequency_status+"");
-    QMessageBox::information(0,"确定应用","应用成功");
+    qDebug() << "send perosnal sig" << lcd_brightness_status << cpu_frequency_status;
+    emit personal_sig_send(lcd_brightness_status,cpu_frequency_status);
+    //QString info = "bash -c \"echo \""+authen->passwd_edit->text()+"\"| sudo -S bash ./settings/quick_mode.sh";
+    //get_setting_status->start("bash ./settings/battery_state.sh "+lcd_brightness_status+" "+cpu_frequency_status+"");
+    //QMessageBox::information(0,"确定应用","应用成功");
 }
 void personalsavemode::checkchange()
 {
     if (sender() == performance_check)
         {
             performance_check->setChecked(true);
+            self_defined_check->setChecked(false);
+            saving_check->setChecked(false);
+            cpu_frequency_status = "cpuperformance";
         }
     if (sender() == self_defined_check)
         {
             self_defined_check->setChecked(true);
+            performance_check->setChecked(false);
+            saving_check->setChecked(false);
+            cpu_frequency_status = "cpuselfdefined";
         }
     if (sender() == saving_check)
         {
             saving_check->setChecked(true);
+            performance_check->setChecked(false);
+            self_defined_check->setChecked(false);
+            cpu_frequency_status = "cpupowersave";
         }
     if (sender() == high_light)
         {
             high_light->setChecked(true);
+            middle_light->setChecked(false);
+            low_light->setChecked(false);
+            lcd_brightness_status = "high";
         }
     if (sender() == middle_light)
         {
             middle_light->setChecked(true);
+            high_light->setChecked(false);
+            low_light->setChecked(false);
+            lcd_brightness_status = "middle";
         }
     if (sender() == low_light)
         {
             low_light->setChecked(true);
+            high_light->setChecked(false);
+            middle_light->setChecked(false);
+            lcd_brightness_status = "low";
         }
 }
